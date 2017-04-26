@@ -44,7 +44,7 @@ $(function() {
     it('should make sure all feeds have names defined & non-empty', function() {
       allFeeds.forEach(function(feed) {
         expect(feed.name).toBeDefined(); // does each feed object have a name
-        expect(feed.url.length).toBeGreaterThan(0); // check length of entry for url
+        expect(feed.name.length).toBeGreaterThan(0); // check length of entry for url
       });
     });
   });
@@ -67,11 +67,10 @@ $(function() {
      * clicked and does it hide when clicked again.
      */
     it('on click, the class menu-hidden should be removed/added', function() {
-      if ($('body').hasClass('menu-hidden')) { // is the menu-hidden class on the body element? (defualt condition)
-        expect($('menu-icon-link').click().hasClass('menu-hidden')).not.toBe(true); // on click, defualt should change
-      } else { // has the menu-hidden class been removed already?
-        expect($('menu-icon-link').click().hasClass('menu-hidden')).toBe(true); // on click, replace the menu-hidden class
-      }
+      $('.menu-icon-link').click(); // assume a click occurs
+      expect($('body').hasClass('menu-hidden')).not.toBe(true); // menu-hidden should be removed
+      $('.menu-icon-link').click(); // assume ANOTHER click occurs
+      expect($('body').hasClass('menu-hidden')).toBe(true); // menu-hidden should be toggled again
     });
   });
 
@@ -91,7 +90,8 @@ $(function() {
 
     it('should load feed items into the feed container', function() {
       //  expect($( '.feed' ).has( '.entry' ).length ? "yes" : "no").toBe("yes"); // checking if the entries have any length
-      expect($('.feed').length).toBeGreaterThan(0); // easier implementation than above.
+      expect($('.feed .entry').length).toBeGreaterThan(0); // easier implementation than above.
+      console.log($('.feed .entry').length); // prints/tracks the actual entries this time :)
     });
   });
 
